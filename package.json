@@ -1,23 +1,29 @@
 {
-  "name": "server",
+  "name": "internal",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "nyc mocha --exit"
+    "start": "SERVER=http://localhost:8082 node server.js",
+    "test": "SERVER=http://localhost:8082 nyc mocha --exit",
+    "nibble": "eslint-nibble ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1"
-  },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.1.2",
+    "eslint": "^7.11.0",
+    "mocha": "^6.2.3",
+    "nock": "^10.0.6",
     "nyc": "^14.1.1",
     "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "eslint-nibble": "^6.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "request": "^2.88.2"
   }
 }
