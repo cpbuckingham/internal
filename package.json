@@ -20,6 +20,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@google-cloud/firestore": "^4.4.0",
     "body-parser": "^1.19.0",
     "eslint-nibble": "^6.0.0",
     "express": "^4.17.1",
