@@ -25,6 +25,7 @@ const firestore = new Firestore(
 );
 
 
+
 // mock events data - for a real solution this data should be coming 
 // from a cloud data store
 const mockEvents = {
