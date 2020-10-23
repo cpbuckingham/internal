@@ -18,8 +18,8 @@ app.use(bodyParser.json());
 // from a cloud data store
 const mockEvents = {
     events: [
-        { title: 'an event', id: 1, description: 'something really cool' },
-        { title: 'another event', id: 2, description: 'something even cooler' }
+        { title: 'an event', id: 1, description: 'something really cool' , likes: 0  },
+        { title: 'another event', id: 2, description: 'something even cooler' , likes: 0  }
     ]
 };
 
@@ -53,11 +53,51 @@ app.post('/event', (req, res) => {
         description: req.body.description,
         date: req.body.date, 
         time: req.body.time,
+                likes: 0,
         id : mockEvents.events.length + 1
      }
     // add to the mock array
     mockEvents.events.push(ev);
     // return the complete array
+    res.json(mockEvents);
+});
+
+app.post('/event/like', (req, res) => {
+    console.log (req.body.id);
+    var objIndex = mockEvents.events.findIndex((obj => obj.id == req.body.id));
+    var likes = mockEvents.events[objIndex].likes;
+    mockEvents.events[objIndex].likes = ++likes;
+    res.json(mockEvents);
+});
+
+app.post('/event/edit', (req, res) => {
+    console.log (req.body.id);
+    var objIndex = mockEvents.events.findIndex((obj => obj.id == req.body.id));
+       const ev = { 
+        title: req.body.title, 
+        description: req.body.description,
+        date: req.body.date, 
+        time: req.body.time,
+                likes: 0,
+        id : objIndex
+     }
+    // add to the mock array
+    mockEvents.events.push(ev);
+    // return the complete array
+    res.json(mockEvents);
+});
+
+// unlikes an event - in a real solution, this would update a cloud datastore.
+// Currently this simply decrements the like counter in the mock array in memory
+// this will produce unexpected behavior in a stateless kubernetes cluster. 
+app.delete('/event/like', (req, res) => {
+
+    console.log (req.body.id);
+    var objIndex = mockEvents.events.findIndex((obj => obj.id == req.body.id));
+    var likes = mockEvents.events[objIndex].likes;
+    if (likes > 0) {
+        mockEvents.events[objIndex].likes = --likes;
+    }
     res.json(mockEvents);
 });
 
